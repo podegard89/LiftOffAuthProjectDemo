@@ -1,4 +1,5 @@
-﻿using AuthDemoProject.Models;
+﻿using AuthDemoProject.Data;
+using AuthDemoProject.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -11,16 +12,32 @@ namespace AuthDemoProject.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private SongRepository _repo;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(SongRepository repo)
         {
-            _logger = logger;
+            _repo = repo;
         }
 
         public IActionResult Index()
         {
+            IEnumerable<Song> songs = _repo.GetAllSongs();
+            return View(songs);
+        }
+
+        [HttpGet("/Add")]
+        public IActionResult AddSong()
+        {
             return View();
+        }
+
+        public IActionResult ProcessAddSongForm()
+        {
+            if (ModelState.IsValid)
+            {
+                return Redirect("Index");
+            }
+            return View("Add");
         }
 
         public IActionResult Privacy()
