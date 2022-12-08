@@ -11,6 +11,9 @@ namespace AuthDemoProject.Models
 
         public string Artist { get; set; }
 
+        public ApplicationUser ApplicationUser { get; set; }
+        public string ApplicationUserId { get; set; }
+
         public Song(string name, string genre, string artist)
         {
             this.Name = name;

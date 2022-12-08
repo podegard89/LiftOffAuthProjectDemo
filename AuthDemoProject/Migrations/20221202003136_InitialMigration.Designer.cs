@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AuthDemoProject.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(MusicDbContext))]
     [Migration("20221202003136_InitialMigration")]
     partial class InitialMigration
     {

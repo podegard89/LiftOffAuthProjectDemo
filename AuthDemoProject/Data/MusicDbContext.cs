@@ -9,9 +9,9 @@ namespace AuthDemoProject.Data
 {
     public class MusicDbContext : IdentityDbContext
     {
-        public DbSet<Artist> Artists { get; set; }
+        //public DbSet<Artist> Artists { get; set; }
         public DbSet<Song> Songs { get; set; }
-        public DbSet<Genre> Genres { get; set; }
+        //Mpublic DbSet<Genre> Genres { get; set; }
 
         public MusicDbContext(DbContextOptions<MusicDbContext> options)
             : base(options)

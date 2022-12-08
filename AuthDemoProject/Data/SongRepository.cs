@@ -9,22 +9,22 @@ namespace AuthDemoProject.Data
     public interface ISongRepository
     {
         IEnumerable<Song> GetAllSongs();
-        IEnumerable<Artist> GetAllArtists();
-        IEnumerable<Genre> GetAllGenres();
+        //IEnumerable<Artist> GetAllArtists();
+        //IEnumerable<Genre> GetAllGenres();
         Song FindSongById(int id);
         void AddNewSong(Song newSong);
-        void AddNewArtist(Artist newArtist);
+        //void AddNewArtist(Artist newArtist);
         void SaveChanges();
-        Artist FindArtistById(int id);
-        IEnumerable<Artist> FindSongsForArtist(string value);
-        void AddNewGenre(Genre newGenre);
-        List<Artist> GetAllSongsArtist();
-        IEnumerable<Song> FindSongsByArtist(string value);
-        IEnumerable<Genre> FindSongsByGenre(string value);
-        Artist FindArtistByGenre(int id);
+       // Artist FindArtistById(int id);
+       // IEnumerable<Artist> FindSongsForArtist(string value);
+        //void AddNewGenre(Genre newGenre);
+       // List<Artist> GetAllSongsArtist();
+        //IEnumerable<Song> FindSongsByArtist(string value);
+        //IEnumerable<Genre> FindSongsByGenre(string value);
+       // Artist FindArtistByGenre(int id);
         //void AddNewSkill(Skill newSkill);
-        IEnumerable<Song> FindSongsByArtistAndGenre(int artistId, int genreId);
-        IEnumerable<Genre> FindGenreById(int id);
+        //IEnumerable<Song> FindSongsByArtistAndGenre(int artistId, int genreId);
+        //IEnumerable<Genre> FindGenreById(int id);
     }
 
     public class SongRepository : ISongRepository
@@ -53,7 +53,7 @@ namespace AuthDemoProject.Data
                     .ToList();
         }
 
-        public virtual IEnumerable<Artist> GetAllArtist()
+       /* public virtual IEnumerable<Artist> GetAllArtist()
         {
             return _context.Artists.ToList();
         }
@@ -71,17 +71,17 @@ namespace AuthDemoProject.Data
         public virtual IEnumerable<Genre> GetAllGenres()
         {
             return _context.Genres.ToList();
-        }
+        }*/
 
         public virtual void AddNewSong(Song newSong)
         {
             _context.Songs.Add(newSong);
         }
 
-        public virtual void AddNewGenre(Genre newGenre)
+        /*public virtual void AddNewGenre(Genre newGenre)
         {
             _context.Genres.Add(newGenre);
-        }
+        }*/
 
         public virtual void SaveChanges()
         {
@@ -144,7 +144,7 @@ namespace AuthDemoProject.Data
                 .Include(js => js.Job)
                 .Include(js => js.Skill)
                 .ToList();
-        }*/
+        }
 
         IEnumerable<Artist> ISongRepository.GetAllArtists()
         {
@@ -179,9 +179,9 @@ namespace AuthDemoProject.Data
         public Artist FindArtistByGenre(int id)
         {
             throw new NotImplementedException();
-        }
+        }*/
 
-        public IEnumerable<Song> FindSongsByArtistAndGenre(int artistId, int genreId)
+        /*public IEnumerable<Song> FindSongsByArtistAndGenre(int artistId, int genreId)
         {
             throw new NotImplementedException();
         }
@@ -189,7 +189,7 @@ namespace AuthDemoProject.Data
         public IEnumerable<Genre> FindGenreById(int id)
         {
             throw new NotImplementedException();
-        }
+        }*/
     }
 }
 

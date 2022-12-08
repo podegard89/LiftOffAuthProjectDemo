@@ -12,11 +12,11 @@ namespace AuthDemoProject.Controllers
 {
     public class HomeController : Controller
     {
-        private SongRepository _repo;
+        private ISongRepository _repo;
 
-        public HomeController(SongRepository repo)
+        public HomeController(ISongRepository repo)
         {
-            _repo = repo;
+            _repo = (ISongRepository)repo;
         }
 
         public IActionResult Index()
@@ -25,7 +25,7 @@ namespace AuthDemoProject.Controllers
             return View(songs);
         }
 
-        [HttpGet("/Add")]
+        /*[HttpGet("/Add")]
         public IActionResult AddSong()
         {
             return View();
@@ -38,17 +38,17 @@ namespace AuthDemoProject.Controllers
                 return Redirect("Index");
             }
             return View("Add");
-        }
+        }*/
 
         public IActionResult Privacy()
         {
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        /*[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        }*/
     }
 }

@@ -1,4 +1,4 @@
-﻿using AuthDemoProject.Data;
+﻿/*using AuthDemoProject.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -28,4 +28,4 @@ namespace AuthDemoProject.Controllers
 
 
     }
-}
+}*/
