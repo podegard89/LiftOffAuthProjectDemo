@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+
 namespace AuthDemoProject.Models
 {
     public class Song
@@ -9,16 +11,19 @@ namespace AuthDemoProject.Models
 
         public string Genre { get; set; }
 
-        public string Artist { get; set; }
+        public Artist Artist { get; set; }
+
+        public int ArtistId { get; set; }
+
+        public List<SongGenre> SongGenres { get; set; }
 
         public ApplicationUser ApplicationUser { get; set; }
         public string ApplicationUserId { get; set; }
 
-        public Song(string name, string genre, string artist)
+        public Song(string name, string genre)
         {
             this.Name = name;
             this.Genre = genre;
-            this.Artist = artist;
         }
 
         public Song()

@@ -1,14 +1,11 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using AuthDemoProject.Data;
+﻿/*using System;
 using AuthDemoProject.Models;
-using AuthDemoProject.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
+using MusicDBProject.Data;
+using System.Collections.Generic;
+using AuthDemoProject.ViewModels;
 
-namespace AuthDemoProject.Controllers
+namespace MusicDBProject.Controllers
 {
     public class SongController : Controller
     {
@@ -20,39 +17,52 @@ namespace AuthDemoProject.Controllers
         }
 
         public IActionResult Index()
-    {
-        IEnumerable<Song> songs = _repo.GetAllSongs();
-        return View(songs);
-    }
-
-    public IActionResult Add()
-    {
-        AddSongViewModel addSongViewModel = new AddSongViewModel();
-        return View(addSongViewModel);
-    }
-
-    public IActionResult ProcessAddSongForm(AddSongViewModel addSongViewModel)
-    {
-        if (ModelState.IsValid)
         {
-            Song song = new Song
-            {
-                Name = addSongViewModel.Name,
-                Genre = addSongViewModel.Genre,
-                Artist = addSongViewModel.Artist
-            };
-            _repo.AddNewSong(song);
-            _repo.SaveChanges();
-            return Redirect("/Song");
+            IEnumerable<Song> songs = _repo.GetAllSongs();
+            return View(songs);
         }
-        return View("Add", addSongViewModel);
-    }
 
-    public IActionResult About(int id)
-    {
-        IEnumerable<Song> songs = _repo.GetAllSongs();
-        return View();
+        public IActionResult Add()
+        {
+            Song song = new Song();
+            return View(song);
+        }
+
+        [HttpPost]
+        public IActionResult Add(Song song)
+        {
+            if (ModelState.IsValid)
+            {
+                _repo.AddNewSong(song);
+                _repo.SaveChanges();
+                return Redirect("/Song");
+            }
+
+            return View("Add", song);
+        }
+
+        public IActionResult ProcessAddSongForm(AddSongViewModel addSongViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                Song song = new Song
+                {
+                    Name = addSongViewModel.Name,
+                    Genre = addSongViewModel.Genre,
+                    Artist = addSongViewModel.Artist
+                };
+                _repo.AddNewSong(song);
+                _repo.SaveChanges();
+                return Redirect("/Song");
+            }
+            return View("Add", addSongViewModel);
+        }
+
+        public IActionResult About(int id)
+        {
+            IEnumerable<Song> songs = _repo.GetAllSongs();
+            return View();
+        }
     }
-}
-}
+}*/
 

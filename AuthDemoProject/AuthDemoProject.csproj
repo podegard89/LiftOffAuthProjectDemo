@@ -20,9 +20,15 @@
   <ItemGroup>
     <None Remove="ViewModels\" />
     <None Remove="Views\Song\" />
+    <None Remove="Views\Artist\" />
+    <None Remove="Views\List\" />
+    <None Remove="Views\Genre\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModels\" />
     <Folder Include="Views\Song\" />
+    <Folder Include="Views\Artist\" />
+    <Folder Include="Views\List\" />
+    <Folder Include="Views\Genre\" />
   </ItemGroup>
 </Project>
