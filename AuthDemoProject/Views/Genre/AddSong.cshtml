@@ -1,0 +1,25 @@
+﻿@model AuthDemoProject.ViewModels.AddSongGenreViewModel
+
+
+<h1>Add Genre to Song: @Model.Song.Name</h1>
+
+
+<form asp-controller="Genre" asp-action="AddSong" method="post">
+
+    <input type="hidden" value="@Model.Song.Id" name="SongId" />
+
+    <div class="form-group">
+
+        <label asp-for="GenreId">Genre</label>
+
+        <select asp-for="GenreId" asp-items="Model.Genres"></select>
+
+        <span asp-validation-for="GenreId"></span>
+
+    </div>
+
+    <input type="submit" value="Add Genre" />
+
+</form>
+
+

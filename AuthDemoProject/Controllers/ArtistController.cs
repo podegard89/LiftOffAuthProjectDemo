@@ -30,7 +30,7 @@ namespace AuthDemoProject.Controllers
             return View(addArtistViewModel);
         }
 
-        public IActionResult ProcessAddEmployerForm(AddArtistViewModel addArtistViewModel)
+        public IActionResult ProcessAddArtistForm(AddArtistViewModel addArtistViewModel)
         {
             if (ModelState.IsValid)
             {
