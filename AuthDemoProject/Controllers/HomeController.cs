@@ -17,19 +17,15 @@ namespace AuthDemoProject.Controllers
 
         private MusicDbContext context;
 
-        private SongRepository _repo;
-
-        public HomeController(ILogger<HomeController> logger, MusicDbContext dbContext, SongRepository repo)
+        public HomeController(ILogger<HomeController> logger, MusicDbContext dbContext)
         {
             _logger = logger;
             context = dbContext;
-            _repo = repo;
 
         }
 
         public IActionResult Index()
         {
-            IEnumerable<Song> songs = _repo.GetAllSongs();
             return View();
         }
 
@@ -55,12 +51,8 @@ namespace AuthDemoProject.Controllers
 
         public IActionResult Detail(int id)
         {
-            Song theSong = _repo.FindSongById(id);
 
-            List<SongGenre> songGenres = _repo.FindGenresForSong(id).ToList();
-
-            SongDetailViewModel viewModel = new SongDetailViewModel(theSong, songGenres);
-            return View(viewModel);
+            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

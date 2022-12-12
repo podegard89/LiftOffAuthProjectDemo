@@ -1,9 +1,10 @@
-﻿/*using System;
+﻿using System;
 using AuthDemoProject.Models;
 using Microsoft.AspNetCore.Mvc;
 using MusicDBProject.Data;
 using System.Collections.Generic;
 using AuthDemoProject.ViewModels;
+using System.Linq;
 
 namespace MusicDBProject.Controllers
 {
@@ -19,13 +20,22 @@ namespace MusicDBProject.Controllers
         public IActionResult Index()
         {
             IEnumerable<Song> songs = _repo.GetAllSongs();
-            return View(songs);
+            return View();
         }
 
-        public IActionResult Add()
+        [HttpGet("/Add")]
+        public IActionResult AddSong()
         {
-            Song song = new Song();
-            return View(song);
+            return View();
+        }
+
+        public IActionResult ProcessAddSongForm()
+        {
+            if (ModelState.IsValid)
+            {
+                return Redirect("Index");
+            }
+            return View("Add");
         }
 
         [HttpPost]
@@ -41,28 +51,21 @@ namespace MusicDBProject.Controllers
             return View("Add", song);
         }
 
-        public IActionResult ProcessAddSongForm(AddSongViewModel addSongViewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                Song song = new Song
-                {
-                    Name = addSongViewModel.Name,
-                    Genre = addSongViewModel.Genre,
-                    Artist = addSongViewModel.Artist
-                };
-                _repo.AddNewSong(song);
-                _repo.SaveChanges();
-                return Redirect("/Song");
-            }
-            return View("Add", addSongViewModel);
-        }
-
         public IActionResult About(int id)
         {
             IEnumerable<Song> songs = _repo.GetAllSongs();
             return View();
         }
+
+        public IActionResult Detail(int id)
+        {
+            Song theSong = _repo.FindSongById(id);
+
+            List<SongGenre> songGenres = _repo.FindGenresForSong(id).ToList();
+
+            SongDetailViewModel viewModel = new SongDetailViewModel(theSong, songGenres);
+            return View(viewModel);
+        }
     }
-}*/
+}
 
