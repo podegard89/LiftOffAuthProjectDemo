@@ -1,6 +1,6 @@
-﻿<h2>You must be logged in to view this page.</h2>
+﻿<h3>You must be logged in to view this page.</h3>
 
-<h2>So if you are seeing this, it means you are logged in!</h2>
+<h3>So if you are seeing this, it means you are logged in!</h3>
 
 <p>@ViewBag.currentUserId</p>
 
@@ -83,6 +83,29 @@
         </table>
 
     }
+        @if (ViewBag.artists != null)
+        {
+            <table>
+
+                @foreach (var artist in ViewBag.artists)
+                 {
+                        <tr>
+
+                            <td>
+
+                                <p>ID: @artist.ArtistId</p>
+
+                                <p>Name: @artist.Name</p>
+
+                                <p>Genre: @artist.GenreText</p>
+
+                            </td>
+
+                        </tr>
+                 }
+
+            </table>
+        }
 
 
 
