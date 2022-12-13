@@ -2,6 +2,7 @@
 using AuthDemoProject.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MusicDBProject.Data;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +13,49 @@ namespace AuthDemoProject.Controllers
     [Authorize]
     public class SearchController : Controller
     {
-        private SongRepository _repo;
+        private readonly MusicDbContext _context;
 
-        public SearchController(SongRepository repo)
+        public SearchController(MusicDbContext dbcontext)
         {
-            _repo = repo;
+            _context = dbcontext;
+        }
+
+        public List<Song> GetAllSongsArtist()
+        {
+            return _context.Songs
+                .Include(s => s.Artist)
+                .ToList();
+        }
+
+        public virtual IEnumerable<SongGenre> FindGenresForSong(int id)
+        {
+            return _context.SongGenres
+                .Where(sg => sg.SongId == id)
+                .Include(sg => sg.Genre)
+                .ToList();
+        }
+
+        public virtual IEnumerable<Song> FindSongsByArtist(string value)
+        {
+            return _context.Songs
+                .Include(s => s.Artist)
+                .Where(s => s.Artist.Name == value)
+                .ToList();
+        }
+
+        public virtual IEnumerable<SongGenre> FindSongGenresByGenre(string value)
+        {
+            return _context.SongGenres
+                .Where(s => s.Genre.Name == value)
+                .Include(s => s.Song)
+                .ToList();
+        }
+
+        public virtual Song FindSongBySongGenre(int id)
+        {
+            return _context.Songs
+                .Include(s => s.Artist)
+                .Single(s => s.Id == id);
         }
 
         //GET: /<controller>/
@@ -33,11 +72,11 @@ namespace AuthDemoProject.Controllers
 
             if (string.IsNullOrEmpty(searchTerm))
             {
-                songs = _repo.GetAllSongsArtist();
+                songs = GetAllSongsArtist();
 
                 foreach(var song in songs)
                 {
-                    List<SongGenre> songGenres = _repo.FindGenresForSong(song.Id).ToList();
+                    List<SongGenre> songGenres = FindGenresForSong(song.Id).ToList();
 
                     SongDetailViewModel newDisplaySong = new SongDetailViewModel(song, songGenres);
                     displaySongs.Add(newDisplaySong);
@@ -47,11 +86,11 @@ namespace AuthDemoProject.Controllers
             {
                 if (searchType == "artist")
                 {
-                    songs = _repo.FindSongsByArtist(searchTerm).ToList();
+                    songs = FindSongsByArtist(searchTerm).ToList();
 
                     foreach (Song song in songs)
                     {
-                        List<SongGenre> songGenres = _repo.FindGenresForSong(song.Id).ToList();
+                        List<SongGenre> songGenres = FindGenresForSong(song.Id).ToList();
 
                         SongDetailViewModel newDisplaySong = new SongDetailViewModel(song, songGenres);
                         displaySongs.Add(newDisplaySong);
@@ -60,13 +99,13 @@ namespace AuthDemoProject.Controllers
                 }
                 else if (searchType == "genre")
                 {
-                    List<SongGenre> songGenres = _repo.FindSongGenresByGenre(searchTerm).ToList();
+                    List<SongGenre> songGenres = FindSongGenresByGenre(searchTerm).ToList();
 
                     foreach (var song in songGenres)
                     {
-                        Song foundSong = _repo.FindSongBySongGenre(song.SongId);
+                        Song foundSong = FindSongBySongGenre(song.SongId);
 
-                        List<SongGenre> displayGenres = _repo.FindGenresForSong(foundSong.Id).ToList();
+                        List<SongGenre> displayGenres = FindGenresForSong(foundSong.Id).ToList();
 
                         SongDetailViewModel newDisplaySong = new SongDetailViewModel(foundSong, displayGenres);
                         displaySongs.Add(newDisplaySong);

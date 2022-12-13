@@ -17,6 +17,7 @@ namespace AuthDemoProject.Controllers
 
         private MusicDbContext context;
 
+
         public HomeController(ILogger<HomeController> logger, MusicDbContext dbContext)
         {
             _logger = logger;

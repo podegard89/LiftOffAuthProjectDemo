@@ -4,23 +4,39 @@ using System.Linq;
 using AuthDemoProject.Models;
 using AuthDemoProject.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MusicDBProject.Data;
 
 namespace AuthDemoProject.Controllers
 {
 	public class ArtistController : Controller
 	{
-		private SongRepository _repo;
+		private readonly MusicDbContext _context;
 
-		public ArtistController(SongRepository repo)
+		public ArtistController(MusicDbContext dbcontext)
 		{
-			_repo = repo;
+			_context = dbcontext;
 		}
+
+        public virtual IEnumerable<Artist> GetAllArtist()
+        {
+            return _context.Artists.Include(a => a.Song).Include(a => a.Genre).ToList();
+        }
+
+        public virtual void AddNewArtist(Artist newArtist)
+        {
+            _context.Artists.Add(newArtist);
+        }
+
+        public virtual void SaveChanges()
+        {
+            _context.SaveChanges();
+        }
 
         //GET: /<controller>/
         public IActionResult Index()
         {
-            IEnumerable<Artist> artist = _repo.GetAllArtist();
+            IEnumerable<Artist> artist = GetAllArtist();
             return View(artist);
         }
 
@@ -38,8 +54,8 @@ namespace AuthDemoProject.Controllers
                 {
                     Name = addArtistViewModel.Name
                 };
-                _repo.AddNewArtist(artist);
-                _repo.SaveChanges();
+                AddNewArtist(artist);
+                SaveChanges();
                 return Redirect("/Employer");
             }
             return View("Add", addArtistViewModel);
@@ -47,7 +63,7 @@ namespace AuthDemoProject.Controllers
 
         public IActionResult About(int id)
         {
-            IEnumerable<Artist> artists = _repo.GetAllArtist();
+            IEnumerable<Artist> artists = GetAllArtist();
             return View();
         }
 

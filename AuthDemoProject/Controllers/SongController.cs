@@ -5,25 +5,54 @@ using MusicDBProject.Data;
 using System.Collections.Generic;
 using AuthDemoProject.ViewModels;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace MusicDBProject.Controllers
 {
     public class SongController : Controller
     {
-        private SongRepository _repo { get; set; }
+        private readonly MusicDbContext _context;
 
-        public SongController(SongRepository repo)
+        public SongController(MusicDbContext dbcontext)
         {
-            _repo = repo;
+            _context = dbcontext;
+        }
+
+        public virtual IEnumerable<Song> GetAllSongs()
+        {
+            return _context.Songs.Include(s => s.Artist).Include(s => s.Genre).ToList();
+        }
+
+        public virtual void AddNewSong(Song newSong)
+        {
+            _context.Songs.Add(newSong);
+        }
+
+        public virtual void SaveChanges()
+        {
+            _context.SaveChanges();
+        }
+
+        public virtual Song FindSongById(int id)
+        {
+            return _context.Songs.Find(id);
+        }
+
+        public virtual IEnumerable<SongGenre> FindGenresForSong(int id)
+        {
+            return _context.SongGenres
+                .Where(sg => sg.SongId == id)
+                .Include(sg => sg.Genre)
+                .ToList();
         }
 
         public IActionResult Index()
         {
-            IEnumerable<Song> songs = _repo.GetAllSongs();
-            return View();
+            IEnumerable<Song> songs = GetAllSongs();
+            return View(songs);
         }
 
-        [HttpGet("/Add")]
+        //[HttpGet("/Add")]
         public IActionResult AddSong()
         {
             return View();
@@ -43,8 +72,8 @@ namespace MusicDBProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                _repo.AddNewSong(song);
-                _repo.SaveChanges();
+                AddNewSong(song);
+                SaveChanges();
                 return Redirect("/Song");
             }
 
@@ -53,19 +82,21 @@ namespace MusicDBProject.Controllers
 
         public IActionResult About(int id)
         {
-            IEnumerable<Song> songs = _repo.GetAllSongs();
-            return View();
+            IEnumerable<Song> songs = GetAllSongs();
+            return View(songs);
         }
 
         public IActionResult Detail(int id)
         {
-            Song theSong = _repo.FindSongById(id);
+            Song theSong = FindSongById(id);
 
-            List<SongGenre> songGenres = _repo.FindGenresForSong(id).ToList();
+            List<SongGenre> songGenres = FindGenresForSong(id).ToList();
 
             SongDetailViewModel viewModel = new SongDetailViewModel(theSong, songGenres);
             return View(viewModel);
         }
+
+
     }
 }
 

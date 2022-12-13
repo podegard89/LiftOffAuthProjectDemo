@@ -4,23 +4,67 @@ using System.Linq;
 using AuthDemoProject.Models;
 using AuthDemoProject.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MusicDBProject.Data;
 
 namespace AuthDemoProject.Controllers
 {
 	public class GenreController : Controller
 	{
-		private SongRepository _repo;
+		private readonly MusicDbContext _context;
 
-		public GenreController(SongRepository repo)
+		public GenreController(MusicDbContext dbContext)
 		{
-			_repo = repo;
+			_context = dbContext;
 		}
 
-		//GET: /<controller>/
-		public IActionResult Index()
+		public virtual IEnumerable<Genre> GetAllGenres()
 		{
-			IEnumerable<Genre> genres = _repo.GetAllGenres();
+			return _context.Genres.ToList();
+		}
+
+		public virtual void AddNewGenre(Genre newGenre)
+		{
+			_context.Genres.Add(newGenre);
+		}
+
+        public virtual void SaveChanges()
+        {
+            _context.SaveChanges();
+        }
+
+        public virtual Song FindSongById(int id)
+        {
+            return _context.Songs.Find(id);
+        }
+
+		public virtual IEnumerable<SongGenre> FindSongsGenresByGenreAndSong(int songId, int genreId)
+		{
+			return _context.SongGenres
+				.Where(sg => sg.SongId == songId)
+				.Where(sg => sg.GenreId == genreId)
+				.ToList();
+		}
+
+		public virtual void AddNewSongGenre(SongGenre newSongGenre)
+		{
+			_context.SongGenres.Add(newSongGenre);
+		}
+
+		public virtual IEnumerable<SongGenre> FindSongGenresById(int id)
+		{
+			return _context.SongGenres
+				.Where(sg => sg.GenreId == id)
+				.Include(sg => sg.Song)
+				.Include(sg => sg.Genre)
+				.ToList();
+		}
+
+
+        //GET: /<controller>/
+        public IActionResult Index()
+		{
+			IEnumerable<Genre> genres = GetAllGenres();
 			return View(genres);
 		}
 
@@ -30,13 +74,13 @@ namespace AuthDemoProject.Controllers
 			return View(genre);
 		}
 
-		[HttpPost]
+        [HttpPost]
 		public IActionResult Add(Genre genre)
 		{
 			if (ModelState.IsValid)
 			{
-				_repo.AddNewGenre(genre);
-				_repo.SaveChanges();
+				AddNewGenre(genre);
+				SaveChanges();
 				return Redirect("/Genre");
 			}
 
@@ -45,8 +89,8 @@ namespace AuthDemoProject.Controllers
 
 		public IActionResult AddSong(int id)
 		{
-			Song theSong = _repo.FindSongById(id);
-			IEnumerable<Genre> possibleGenres = _repo.GetAllGenres();
+			Song theSong = FindSongById(id);
+			IEnumerable<Genre> possibleGenres = GetAllGenres();
 			AddSongGenreViewModel viewModel = new AddSongGenreViewModel(theSong, possibleGenres.ToList());
 			return View(viewModel);
 		}
@@ -59,7 +103,7 @@ namespace AuthDemoProject.Controllers
 				int songId = viewModel.SongId;
 				int genreId = viewModel.GenreId;
 
-				List<SongGenre> existingItems = _repo.FindSongsGenresByGenreAndSong(songId, genreId).ToList();
+				List<SongGenre> existingItems = FindSongsGenresByGenreAndSong(songId, genreId).ToList();
 
 				if (existingItems.Count == 0)
 				{
@@ -69,8 +113,8 @@ namespace AuthDemoProject.Controllers
 						GenreId = genreId
 					};
 
-					_repo.AddNewSongGenre(songGenre);
-					_repo.SaveChanges();
+					AddNewSongGenre(songGenre);
+					SaveChanges();
 				}
 
 				return Redirect("/Home/Detail/" + songId);
@@ -81,7 +125,7 @@ namespace AuthDemoProject.Controllers
 
 		public IActionResult About(int id)
 		{
-			IEnumerable<SongGenre> songGenres = _repo.FindSongGenresById(id);
+			IEnumerable<SongGenre> songGenres = FindSongGenresById(id);
 			return View(songGenres);
 		}
 	}

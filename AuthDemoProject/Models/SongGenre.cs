@@ -1,8 +1,11 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+
 namespace AuthDemoProject.Models
 {
 	public class SongGenre
 	{
+		[Key]
 		public int SongId { get; set; }
 		public Song Song { get; set; }
 
