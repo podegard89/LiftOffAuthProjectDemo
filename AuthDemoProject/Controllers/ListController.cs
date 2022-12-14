@@ -37,16 +37,12 @@ namespace AuthDemoProject.Controllers
         public virtual IEnumerable<Song> GetAllSongs()
         {
             return _context.Songs
-				.Include(s => s.Artist)
-				.Include(s => s.Genre)
 				.ToList();
         }
 
         public virtual IEnumerable<Artist> GetAllArtist()
         {
             return _context.Artists
-				.Include(a => a.Song)
-				.Include(a => a.Genre)
 				.ToList();
         }
 

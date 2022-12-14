@@ -122,8 +122,27 @@ namespace AuthDemoProject.Controllers
 
 			return View(viewModel);
 		}
+        public IActionResult Delete()
+        {
+            ViewBag.genres = _context.Genres.ToList();
 
-		public IActionResult About(int id)
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Delete(int[] genreIds)
+        {
+            foreach (int genreId in genreIds)
+            {
+                Genre theGenre = _context.Genres.Find(genreId);
+                _context.Genres.Remove(theGenre);
+            }
+            _context.SaveChanges();
+
+            return Redirect("/Genre");
+        }
+
+        public IActionResult About(int id)
 		{
 			IEnumerable<SongGenre> songGenres = FindSongGenresById(id);
 			return View(songGenres);

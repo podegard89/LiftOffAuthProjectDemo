@@ -1,0 +1,16 @@
+﻿<h1>Delete Genre</h1>
+
+<form method="post">
+    @foreach (var gen in ViewBag.genre)
+    {
+        <div class="form-group">
+            <label>
+                <span>@gen.Name</span>
+                <input type="checkbox" name="genreIds" value="@gen.Id" class="form-control">
+            </label>
+        </div>
+    }
+
+    <input type="submit" value="Delete Selected Genres" class="btn btn-danger">
+
+</form>

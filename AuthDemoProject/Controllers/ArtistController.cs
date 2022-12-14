@@ -20,7 +20,7 @@ namespace AuthDemoProject.Controllers
 
         public virtual IEnumerable<Artist> GetAllArtist()
         {
-            return _context.Artists.Include(a => a.Song).Include(a => a.Genre).ToList();
+            return _context.Artists.ToList();
         }
 
         public virtual void AddNewArtist(Artist newArtist)
@@ -59,6 +59,26 @@ namespace AuthDemoProject.Controllers
                 return Redirect("/Employer");
             }
             return View("Add", addArtistViewModel);
+        }
+
+        public IActionResult Delete()
+        {
+            ViewBag.songs = _context.Artists.ToList();
+
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Delete(int[] artistIds)
+        {
+            foreach (int artistId in artistIds)
+            {
+                Artist theArtist = _context.Artists.Find(artistId);
+                _context.Artists.Remove(theArtist);
+            }
+            _context.SaveChanges();
+
+            return Redirect("/Artist");
         }
 
         public IActionResult About(int id)

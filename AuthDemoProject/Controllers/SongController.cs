@@ -20,7 +20,7 @@ namespace MusicDBProject.Controllers
 
         public virtual IEnumerable<Song> GetAllSongs()
         {
-            return _context.Songs.Include(s => s.Artist).Include(s => s.Genre).ToList();
+            return _context.Songs.ToList();
         }
 
         public virtual void AddNewSong(Song newSong)
@@ -52,7 +52,6 @@ namespace MusicDBProject.Controllers
             return View(songs);
         }
 
-        //[HttpGet("/Add")]
         public IActionResult AddSong()
         {
             return View();
@@ -78,6 +77,26 @@ namespace MusicDBProject.Controllers
             }
 
             return View("Add", song);
+        }
+
+        public IActionResult Delete()
+        {
+            ViewBag.songs = _context.Songs.ToList();
+
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Delete(int[] songIds)
+        {
+            foreach (int songId in songIds)
+            {
+                Song theSong = _context.Songs.Find(songId);
+                _context.Songs.Remove(theSong);
+            }
+            _context.SaveChanges();
+
+            return Redirect("/Song");
         }
 
         public IActionResult About(int id)
