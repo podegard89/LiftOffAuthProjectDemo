@@ -1,8 +1,9 @@
-﻿<h1>Song: Name</h1>
+﻿@model AuthDemoProject.ViewModels.AddSongViewModel
+
+<h1>@Model: Name</h1>
 
 <div>
-    <p>Name: name</p>
-    <p>Artist: artist</p>
-    <p>Genre: genre</p>
+    <p>Song: @Model.Name</p>
+    <p>Artist: @Model.Artist</p>
+    <p>Genre: @Model.Genre</p>
 </div>
-
