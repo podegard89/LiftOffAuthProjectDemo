@@ -30,7 +30,7 @@ namespace AuthDemoProject.Controllers
             return View();
         }
 
-        [HttpGet("/Add")]
+        
         public IActionResult AddSong()
         {
             return View();

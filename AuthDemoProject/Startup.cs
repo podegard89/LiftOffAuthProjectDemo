@@ -29,20 +29,13 @@ namespace AuthDemoProject
         {
             services.AddControllersWithViews();
 
-            var connectionString = "server=localhost;userid=music-project;password=MusicProject22;database=music-project;";
-            var serverVersion = new MySqlServerVersion(new Version(8, 0, 31));
+            services.AddDbContext<MusicDbContext>(options =>
+                options.UseMySql(
+                    Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<MusicDbContext>();  
 
-            services.AddDbContext<MusicDbContext>(
-                dbContextOptions => dbContextOptions
-                    .UseMySql(connectionString, serverVersion));
-
-            //services.AddDbContext<MusicDbContext>(options =>
-            //    options.UseMySql(
-            //        Configuration.GetConnectionString("DefaultConnection")));
-            //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-            //    .AddEntityFrameworkStores<MusicDbContext>();
-
-            //services.AddRazorPages();
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

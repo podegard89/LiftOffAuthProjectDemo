@@ -52,9 +52,31 @@ namespace MusicDBProject.Controllers
             return View(songs);
         }
 
-        public IActionResult AddSong()
+        [HttpGet("/Add")]
+        public IActionResult Add()
         {
-            return View();
+            AddSongViewModel addSongViewModel = new AddSongViewModel();
+            return View(addSongViewModel);
+        }
+
+        
+
+        [HttpPost("Songs/Add")]
+        public IActionResult AddSong(AddSongViewModel addSongViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                Song newSong = new Song
+                {
+                    Name = addSongViewModel.Name,
+                    Genre = addSongViewModel.Genre
+                };
+                AddNewSong(newSong);
+                SaveChanges();
+                return Redirect("/Song");
+            }
+
+            return View("Add", addSongViewModel);
         }
 
         public IActionResult ProcessAddSongForm()
@@ -64,19 +86,6 @@ namespace MusicDBProject.Controllers
                 return Redirect("Index");
             }
             return View("Add");
-        }
-
-        [HttpPost]
-        public IActionResult Add(Song song)
-        {
-            if (ModelState.IsValid)
-            {
-                AddNewSong(song);
-                SaveChanges();
-                return Redirect("/Song");
-            }
-
-            return View("Add", song);
         }
 
         public IActionResult Delete()
