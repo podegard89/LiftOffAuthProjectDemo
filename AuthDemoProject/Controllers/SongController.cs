@@ -61,7 +61,7 @@ namespace MusicDBProject.Controllers
 
         
 
-        [HttpPost("Songs/Add")]
+        [HttpPost("Song/Add")]
         public IActionResult AddSong(AddSongViewModel addSongViewModel)
         {
             if (ModelState.IsValid)
@@ -79,11 +79,18 @@ namespace MusicDBProject.Controllers
             return View("Add", addSongViewModel);
         }
 
-        public IActionResult ProcessAddSongForm()
+        public IActionResult ProcessAddSongForm(AddSongViewModel addSongViewModel)
         {
             if (ModelState.IsValid)
             {
-                return Redirect("Index");
+                Song song = new Song
+                {
+                    Name = addSongViewModel.Name,
+                    Genre = addSongViewModel.Genre
+                };
+                AddNewSong(song);
+                SaveChanges();
+                return Redirect("/Song");
             }
             return View("Add");
         }

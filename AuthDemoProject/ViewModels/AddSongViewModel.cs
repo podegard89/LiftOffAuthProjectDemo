@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using AuthDemoProject.Models;
 
 namespace AuthDemoProject.ViewModels
 {
@@ -10,7 +11,7 @@ namespace AuthDemoProject.ViewModels
 
 		public string Genre { get; set; }
 
-		public string Artist { get; set; }
+		public Artist Artist { get; set; }
 
         public AddSongViewModel()
         {

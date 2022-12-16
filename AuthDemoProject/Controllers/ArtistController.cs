@@ -56,7 +56,7 @@ namespace AuthDemoProject.Controllers
                 };
                 AddNewArtist(artist);
                 SaveChanges();
-                return Redirect("/Employer");
+                return Redirect("/Artist");
             }
             return View("Add", addArtistViewModel);
         }
