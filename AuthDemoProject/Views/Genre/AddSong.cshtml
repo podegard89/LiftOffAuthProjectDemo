@@ -1,0 +1,19 @@
+﻿@model AuthDemoProject.ViewModels.AddSongGenreViewModel
+
+
+<h1>Add Genre to Song: @Model.Song.Name</h1>
+
+
+<div class="form-group">
+    <label>Song Genres:</label>
+    <br />
+    @foreach (var genre in Model.Genres)
+    {
+        <input type="checkbox" name="selectedGenres" value="@genre.Value" />
+        <label for="@genre.Value">@genre.Text</label>
+    }
+    <a asp-controller="Genre" asp-action="Add">Add Genre</a>
+
+</div>
+
+

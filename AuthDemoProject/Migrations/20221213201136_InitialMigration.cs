@@ -9,6 +9,20 @@ namespace AuthDemoProject.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Artists",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    Genre = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Artists", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
                 {
@@ -46,6 +60,20 @@ namespace AuthDemoProject.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Genres",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(maxLength: 250, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Genres", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -155,24 +183,57 @@ namespace AuthDemoProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Pets",
+                name: "Songs",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
-                    Species = table.Column<string>(nullable: true),
+                    Genre = table.Column<string>(nullable: true),
+                    ArtistId = table.Column<int>(nullable: false),
                     ApplicationUserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Pets", x => x.Id);
+                    table.PrimaryKey("PK_Songs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Pets_AspNetUsers_ApplicationUserId",
+                        name: "FK_Songs_AspNetUsers_ApplicationUserId",
                         column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Songs_Artists_ArtistId",
+                        column: x => x.ArtistId,
+                        principalTable: "Artists",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SongGenres",
+                columns: table => new
+                {
+                    SongId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    SongId1 = table.Column<int>(nullable: false),
+                    GenreId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SongGenres", x => x.SongId);
+                    table.ForeignKey(
+                        name: "FK_SongGenres_Genres_GenreId",
+                        column: x => x.GenreId,
+                        principalTable: "Genres",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SongGenres_Songs_SongId1",
+                        column: x => x.SongId1,
+                        principalTable: "Songs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -213,9 +274,24 @@ namespace AuthDemoProject.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pets_ApplicationUserId",
-                table: "Pets",
+                name: "IX_SongGenres_GenreId",
+                table: "SongGenres",
+                column: "GenreId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SongGenres_SongId1",
+                table: "SongGenres",
+                column: "SongId1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Songs_ApplicationUserId",
+                table: "Songs",
                 column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Songs_ArtistId",
+                table: "Songs",
+                column: "ArtistId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -236,13 +312,22 @@ namespace AuthDemoProject.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Pets");
+                name: "SongGenres");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
+                name: "Genres");
+
+            migrationBuilder.DropTable(
+                name: "Songs");
+
+            migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Artists");
         }
     }
 }

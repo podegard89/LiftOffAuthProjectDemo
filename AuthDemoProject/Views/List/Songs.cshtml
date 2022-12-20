@@ -1,0 +1,48 @@
+﻿
+
+<div class="container body-content">
+
+
+    <h1>@ViewBag.title</h1>
+
+
+    <table>
+
+        <tr>
+
+            <th>ID</th>
+
+            <th>Name</th>
+
+            <th>Artist</th>
+
+            <th>Genres</th>
+
+        </tr>
+
+        @foreach (var song in ViewBag.songs)
+
+        {
+
+            <tr>
+
+                <td>@song.SongId</td>
+
+                <td>@song.Name</td>
+
+                <td>@song.ArtistName</td>
+
+                <td>@song.GenreText</td>
+
+            </tr>
+
+        }
+
+    </table>
+
+
+</div>
+
+
+
+

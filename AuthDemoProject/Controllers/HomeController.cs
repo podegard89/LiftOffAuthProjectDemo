@@ -1,6 +1,8 @@
 ﻿using AuthDemoProject.Models;
+using AuthDemoProject.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using MusicDBProject.Data;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,9 +15,14 @@ namespace AuthDemoProject.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private MusicDbContext context;
+
+
+        public HomeController(ILogger<HomeController> logger, MusicDbContext dbContext)
         {
             _logger = logger;
+            context = dbContext;
+
         }
 
         public IActionResult Index()
@@ -23,8 +30,29 @@ namespace AuthDemoProject.Controllers
             return View();
         }
 
+        
+        public IActionResult AddSong()
+        {
+            return View();
+        }
+
+        public IActionResult ProcessAddSongForm()
+        {
+            if (ModelState.IsValid)
+            {
+                return Redirect("Index");
+            }
+            return View("Add");
+        }
+
         public IActionResult Privacy()
         {
+            return View();
+        }
+
+        public IActionResult Detail(int id)
+        {
+
             return View();
         }
 
