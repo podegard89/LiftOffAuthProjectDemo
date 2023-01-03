@@ -1,5 +1,6 @@
 ﻿using System;
 using AuthDemoProject.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,6 +17,12 @@ namespace MusicDBProject.Data
         {
         }
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);   //Autofilled? 
+            builder.Entity<SongGenre>()
+                .HasKey(s => new { s.SongId, s.GenreId });
+        }
 
     }
 }

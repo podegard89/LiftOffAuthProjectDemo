@@ -20,7 +20,7 @@ else
     @foreach (Song song in Model)
     {
         <tr>
-            <td><a asp-controller="Home" asp-action="Detail" asp-route-id="@song.Id">@song.Name</a></td>
+            <td><a asp-controller="Song" asp-action="About" asp-route-id="@song.Id">@song.Name</a></td>
             <td>@song.Artist.Name</td>
             <td>@song.Genre</td>
         </tr>

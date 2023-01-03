@@ -22,14 +22,12 @@ namespace AuthDemoProject.Models
         public ApplicationUser ApplicationUser { get; set; }
         public string ApplicationUserId { get; set; }
 
-        public Song(string name, string genre)
-        {
-            this.Name = name;
-            this.Genre = genre;
-        }
-
         public Song()
         {
+        }
+        public Song(string name)
+        {
+            Name = name;
         }
     }
 }

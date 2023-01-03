@@ -100,13 +100,10 @@ namespace AuthDemoProject.Controllers
                 else if (searchType == "genre")
                 {
                     List<SongGenre> songGenres = FindSongGenresByGenre(searchTerm).ToList();
-
                     foreach (var song in songGenres)
                     {
                         Song foundSong = FindSongBySongGenre(song.SongId);
-
                         List<SongGenre> displayGenres = FindGenresForSong(foundSong.Id).ToList();
-
                         SongDetailViewModel newDisplaySong = new SongDetailViewModel(foundSong, displayGenres);
                         displaySongs.Add(newDisplaySong);
                     }

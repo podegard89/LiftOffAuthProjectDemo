@@ -23,9 +23,22 @@ namespace AuthDemoProject.Controllers
 			return _context.Genres.ToList();
 		}
 
-		public virtual void AddNewGenre(Genre newGenre)
+        //Repo Method
+        //public virtual Genre FindGenreById(int id)
+        //{
+        //    return _context.Genres.Find(id);
+        //}
+
+        //Repo Method
+        //public virtual void AddNewGenre(Genre newGenre)
+        //{
+        //    _context.Genres.Add(newGenre);
+        //}
+
+        //Repo Method - changed Genre to SongGenre
+        public virtual void AddNewSongGenre(SongGenre newSongGenre)
 		{
-			_context.Genres.Add(newGenre);
+			_context.SongGenres.Add(newSongGenre);
 		}
 
         public virtual void SaveChanges()
@@ -33,23 +46,60 @@ namespace AuthDemoProject.Controllers
             _context.SaveChanges();
         }
 
+        //Also In Song Controller
+		//Ask about concept behind this
         public virtual Song FindSongById(int id)
         {
-            return _context.Songs.Find(id);
+            return _context.Songs.Include(s => s.Artist).Single(s => s.Id == id);
+
+            //return _context.Songs.Find(id);
         }
 
-		public virtual IEnumerable<SongGenre> FindSongsGenresByGenreAndSong(int songId, int genreId)
+        public virtual IEnumerable<Song> FindSongsByArtist(string value)
+		{
+			return _context.Songs
+				.Include(s => s.Artist)
+				.Where(s => s.Artist.Name == value)
+				.ToList();
+			
+		}
+
+		//Repo Method - added in
+		public virtual IEnumerable<SongGenre> FindGenresForSong(int id)
 		{
 			return _context.SongGenres
-				.Where(sg => sg.SongId == songId)
-				.Where(sg => sg.GenreId == genreId)
+				.Where(sg => sg.SongId == id)
+				.Include(sg => sg.Genre).ToList();
+		}
+
+		//Repo Method - added in
+		public virtual IEnumerable<SongGenre> FindSongGenresByGenre(string value)
+		{
+			return _context.SongGenres
+				.Where(sg => sg.Genre.Name == value)
+				.Include(sg => sg.Song)
 				.ToList();
 		}
 
-		public virtual void AddNewSongGenre(SongGenre newSongGenre)
+        //Repo Method
+        public virtual IEnumerable<SongGenre> FindSongsGenresByGenreAndSong(int songId, int genreId)
+        {
+            return _context.SongGenres
+                .Where(sg => sg.SongId == songId)
+                .Where(sg => sg.GenreId == genreId)
+                .ToList();
+        }
+
+		//Repo Method - added in
+		public virtual void AddNewGenre(Genre newGenre)
 		{
-			_context.SongGenres.Add(newSongGenre);
+			_context.Genres.Add(newGenre);
 		}
+
+  //      public virtual void AddNewSongGenre(SongGenre newSongGenre)
+		//{
+		//	_context.SongGenres.Add(newSongGenre);
+		//}
 
 		public virtual IEnumerable<SongGenre> FindSongGenresById(int id)
 		{
@@ -81,7 +131,7 @@ namespace AuthDemoProject.Controllers
 			{
 				AddNewGenre(genre);
 				SaveChanges();
-				return Redirect("/Genre");
+				return Redirect("/Genre/");
 			}
 
 			return View("Add", genre);

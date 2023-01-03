@@ -13,7 +13,7 @@ namespace AuthDemoProject.Models
 
 		public string Genre { get; set; }
 
-		public List<Song> Song { get; set; }
+		public List<Song> Songs { get; set; }
 
         public Artist()
         {

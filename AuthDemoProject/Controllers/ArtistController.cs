@@ -18,11 +18,19 @@ namespace AuthDemoProject.Controllers
 			_context = dbcontext;
 		}
 
-        public virtual IEnumerable<Artist> GetAllArtist()
+        //Repo Method - add s to GetAllArtist() - make plural (& line39)
+        public virtual IEnumerable<Artist> GetAllArtists()
         {
             return _context.Artists.ToList();
         }
 
+        //Repo Method
+        public virtual Artist FindArtistById(int id)
+        {
+            return _context.Artists.Find(id);
+        }
+
+        //Repo Method
         public virtual void AddNewArtist(Artist newArtist)
         {
             _context.Artists.Add(newArtist);
@@ -36,8 +44,8 @@ namespace AuthDemoProject.Controllers
         //GET: /<controller>/
         public IActionResult Index()
         {
-            IEnumerable<Artist> artist = GetAllArtist();
-            return View(artist);
+            IEnumerable<Artist> artists = GetAllArtists();
+            return View(artists);
         }
 
         public IActionResult Add()
@@ -61,6 +69,7 @@ namespace AuthDemoProject.Controllers
             return View("Add", addArtistViewModel);
         }
 
+        //TODO CHECK THE DELETE METHODS
         public IActionResult Delete()
         {
             ViewBag.songs = _context.Artists.ToList();
@@ -81,10 +90,11 @@ namespace AuthDemoProject.Controllers
             return Redirect("/Artist");
         }
 
+
         public IActionResult About(int id)
         {
-            IEnumerable<Artist> artists = GetAllArtist();
-            return View();
+            Artist artist = FindArtistById(id);
+            return View(artist);
         }
 
     }

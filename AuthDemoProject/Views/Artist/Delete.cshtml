@@ -1,14 +1,13 @@
-﻿@model AuthDemoProject.Controllers.ArtistController
-
+﻿
 <h1>Delete Artist</h1>
 
 <form method="post">
-    @foreach (var arts in ViewBag.artist)
+    @foreach (var artist in ViewBag.artist)
     {
         <div class="form-group">
             <label>
-                <span>@arts.Name</span>
-                <input type="checkbox" name="artistIds" value="@arts.Id" class="form-control">
+                <span>@artist.Name</span>
+                <input type="checkbox" name="artistIds" value="@artist.Id" class="form-control">
             </label>
         </div>
     }

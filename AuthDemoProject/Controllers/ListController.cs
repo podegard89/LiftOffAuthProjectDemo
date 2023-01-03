@@ -40,7 +40,7 @@ namespace AuthDemoProject.Controllers
 				.ToList();
         }
 
-        public virtual IEnumerable<Artist> GetAllArtist()
+        public virtual IEnumerable<Artist> GetAllArtists()
         {
             return _context.Artists
 				.ToList();
@@ -96,7 +96,7 @@ namespace AuthDemoProject.Controllers
 			ViewBag.columns = ColumnChoices;
 			ViewBag.tablechoices = TableChoices;
 			ViewBag.songs = GetAllSongs();
-			ViewBag.artist = GetAllArtist();
+			ViewBag.artists = GetAllArtists();
 			ViewBag.genres = GetAllGenres();
 			return View();
 		}
