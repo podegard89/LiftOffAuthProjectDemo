@@ -2,12 +2,12 @@
 <h1>Delete Artist</h1>
 
 <form method="post">
-    @foreach (var artist in ViewBag.artist)
+    @foreach (var arts in ViewBag.artists)
     {
         <div class="form-group">
             <label>
-                <span>@artist.Name</span>
-                <input type="checkbox" name="artistIds" value="@artist.Id" class="form-control">
+                <span>@arts.Name</span>
+                <input type="checkbox" name="artistIds" value="@arts.Id" class="form-control">
             </label>
         </div>
     }

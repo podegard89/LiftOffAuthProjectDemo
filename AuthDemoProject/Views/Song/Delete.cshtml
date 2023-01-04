@@ -2,7 +2,7 @@
 
 <h1>Delete Song</h1>
 
-<form method="post">
+<form asp-controller="Song" asp-action="Delete" method="post">
     @foreach (var sng in ViewBag.songs)
     {
         <div class="form-group">

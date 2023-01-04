@@ -72,7 +72,7 @@ namespace AuthDemoProject.Controllers
         //TODO CHECK THE DELETE METHODS
         public IActionResult Delete()
         {
-            ViewBag.songs = _context.Artists.ToList();
+            ViewBag.artists = _context.Artists.ToList();
 
             return View();
         }

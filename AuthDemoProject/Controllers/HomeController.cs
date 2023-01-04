@@ -20,13 +20,13 @@ namespace AuthDemoProject.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        private MusicDbContext context;
+        private MusicDbContext _context;
 
 
         public HomeController(ILogger<HomeController> logger, MusicDbContext dbContext)
         {
             _logger = logger;
-            context = dbContext;
+            _context = dbContext;
 
         }
 
@@ -71,7 +71,7 @@ namespace AuthDemoProject.Controllers
 
         public IActionResult Detail(int id)
         {
-            Song theSong = FindSongByID(id);
+            Song theSong = FindSongById(id);
             List<SongGenre> songGenres = FindGenresForSong(id).ToList();
             SongDetailViewModel viewModel = new SongDetailViewModel(theSong, songGenres);
             return View(viewModel);

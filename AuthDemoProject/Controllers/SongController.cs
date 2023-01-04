@@ -99,7 +99,6 @@ namespace MusicDBProject.Controllers
             return View(songs);
         }
 
-        //[HttpGet("/Add")]
         public IActionResult AddSong()
         {
             AddSongViewModel addSongViewModel = new AddSongViewModel(GetAllArtists().ToList(), GetAllGenres().ToList());
@@ -126,6 +125,7 @@ namespace MusicDBProject.Controllers
         //    return View("Add", addSongViewModel);
         //}
 
+        [HttpPost]
         public IActionResult ProcessAddSongForm(AddSongViewModel addSongViewModel, string[] selectedGenres)
         {
             if (ModelState.IsValid)
@@ -137,7 +137,6 @@ namespace MusicDBProject.Controllers
                     Artist = FindArtistById(addSongViewModel.ArtistId)
                     //Genre = addSongViewModel.Genres.ToString()
                 };
-                //foreach (var genre in selectedGenres)
                 for (int i = 0; i < selectedGenres.Length; i++)
                 {
                     SongGenre newSongGenre = new SongGenre
