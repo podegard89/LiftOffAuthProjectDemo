@@ -1,114 +1,55 @@
-﻿@model AuthDemoProject.Controllers.SearchController
-
-<h3>You must be logged in to view this page.</h3>
-
-<h3>So if you are seeing this, it means you are logged in!</h3>
-
-<p>@ViewBag.currentUserId</p>
-
+﻿<p>Hello: @ViewBag.currentUserId</p>
 <div class="container body-content">
-
-
     <h1>@ViewBag.title</h1>
-
-
     <form action="/search/results" method="post">
-
         <h2>Search by:</h2>
-
-
         <p>
-
             @foreach (var column in ViewBag.columns)
-
             {
-
                 <span>
-
                     <input type="radio" name="searchType" id="@column.Key" value="@column.Key" checked="@column.Key == 'all'" />
-
                     <label for="@column.Key">@column.Value</label>
-
                 </span>
-
             }
-
-
         </p>
-
-
         <p>
-
             <label for="searchTerm">Keyword:</label>
-
             <input type="text" name="searchTerm" id="searchTerm" />
-
         </p>
-
-
         <input type="submit" value="Search" />
-
     </form>
-
-
     <hr />
-
-
     @if (ViewBag.songs != null)
-
     {
-
         <table>
-
             @foreach (var song in ViewBag.songs)
-
             {
-
                 <tr>
-
                     <td>
-
                         <p>ID: @song.SongId</p>
-
                         <p>Name: @song.Name</p>
-
                         <p>Artist: @song.ArtistName</p>
-
                         <p>Genre: @song.GenreText</p>
-
                     </td>
-
                 </tr>
-
             }
-
         </table>
-
     }
-        @if (ViewBag.artists != null)
+    @*@if (ViewBag.artists != null)
         {
             <table>
-
                 @foreach (var artist in ViewBag.artists)
                  {
                         <tr>
-
                             <td>
-
                                 <p>ID: @artist.ArtistId</p>
-
                                 <p>Name: @artist.Name</p>
-
                                 <p>Genre: @artist.GenreText</p>
-
                             </td>
-
                         </tr>
                  }
-
             </table>
-        }
-
-
+        }*@
+</div>
 
 </div>

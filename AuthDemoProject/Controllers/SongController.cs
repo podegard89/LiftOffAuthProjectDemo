@@ -125,7 +125,6 @@ namespace MusicDBProject.Controllers
         //    return View("Add", addSongViewModel);
         //}
 
-        [HttpPost]
         public IActionResult ProcessAddSongForm(AddSongViewModel addSongViewModel, string[] selectedGenres)
         {
             if (ModelState.IsValid)

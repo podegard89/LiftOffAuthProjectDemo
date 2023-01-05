@@ -1,0 +1,31 @@
+﻿@model AuthDemoProject.ViewModels.AddSongViewModel
+
+<h1>Add New Song - Song/Add</h1>
+
+<form asp-controller="Song" asp-action="ProcessAddSongForm" method="post">
+    <div class="form-group">
+        <label asp-for="Name">Song Name</label>
+        <input asp-for="Name" />
+        <span asp-validation-for="Name"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ArtistId">Artist Name:</label>
+        <select asp-for="ArtistId" asp-items="@Model.Artists"></select>
+        <a asp-controller="Artist" asp-action="Add">Add an Artist</a>
+        @*<span asp-validation-for="Artist"></span>*@
+    </div>
+    <br />
+    <div class="form-group">
+        <label>Genres:</label>
+        <br />
+        @foreach (var genre in Model.Genres)
+        {
+            <label for="@genre.Id">@genre.Name></label>
+            <input type="checkbox" name="selectedGenres" value="@genre.Id" />
+        }
+        <a asp-controller="Genre" asp-action="Add">Add a Genre</a>
+    </div>
+    <input type="submit" value="Add Song" />
+
+</form>
+

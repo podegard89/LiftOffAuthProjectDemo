@@ -1,19 +1,24 @@
 ﻿@model AuthDemoProject.ViewModels.AddSongGenreViewModel
-
-
-<h1>Add Genre to Song: @Model.Song.Name</h1>
-
-
-<div class="form-group">
-    <label>Song Genres:</label>
-    <br />
-    @foreach (var genre in Model.Genres)
-    {
-        <input type="checkbox" name="selectedGenres" value="@genre.Value" />
-        <label for="@genre.Value">@genre.Text</label>
-    }
-    <a asp-controller="Genre" asp-action="Add">Add Genre</a>
-
-</div>
+<h1>Add Genre to @Model.Song.Name</h1>
+@*Needs to be "AddSong" for action, don't forget = sign*@
+<form asp-controller="Genre" asp-action="AddSong" method="post">
+    <input type="hidden" value="@Model.Song.Id" name="SongId" />
+    <div class="form-group">
+        <label asp-for="GenreId">Genre</label>
+        <select asp-for="GenreId" asp-items="Model.Genres"></select>
+        <span asp-validation-for="GenreId"></span>
+    </div>
+    @*<div class="form-group">
+            <label>Song Genres:</label>
+            <br />
+            @foreach (var genre in Model.Genres)
+            {
+                <input type="checkbox" name="selectedGenres" value="@genre.Value" />
+                <label for="@genre.Value">@genre.Text</label>
+            }
+            <a asp-controller="Genre" asp-action="Add">Add Genre</a>
+        </div>*@
+    <input type="submit" value="Add Genre to Song" />
+</form>
 
 

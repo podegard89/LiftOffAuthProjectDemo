@@ -10,25 +10,16 @@
 }
 
 else
-
 {
-
+    //added
+    <p>Genre Description: @Model[0].Genre.Description</p>
     <h1>Songs in this Genre: @Model[0].Genre.Name</h1>
-
-
     <ul>
-
         @foreach (var songGenre in Model)
-
         {
-
             <li>@songGenre.Song.Name</li>
-
         }
-
     </ul>
-
-
 }
 
 

@@ -1,4 +1,4 @@
-﻿@model AuthDemoProject.Controllers.ListController
+﻿
 
 <div class="container body-content">
 
@@ -10,44 +10,27 @@
 
 
 <table class="centeredTable">
-
     <tr>
-
         @foreach (var column in ViewBag.columns)
-
         {
-
             @if (column.Key != "all")
             {
-
                 <th>@column.Value</th>
             }
         }
-
     </tr>
-
     <tr>
-
         @foreach (var category in ViewBag.tableChoices)
-
         {
-
             <td>
-
                 <ul>
-
                     @if (category == "artist")
                     {
-
                         @foreach (var item in ViewBag.artists)
                         {
-
                             <li>
-
                                 <a asp-controller="List" asp-action="Songs" asp-route-column="@category" asp-route-value="@item.Name">@item.Name</a>
-
                             </li>
-
                         }
                     }
                     else
@@ -59,15 +42,9 @@
                             </li>
                         }
                     }
-
-
                 </ul>
-
             </td>
-
         }
-
     </tr>
-
 </table>
 
