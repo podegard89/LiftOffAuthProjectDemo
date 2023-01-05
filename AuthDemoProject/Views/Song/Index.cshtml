@@ -23,6 +23,7 @@ else
                 <td><a asp-controller="Home" asp-action="Detail" asp-route-id="@song.Id">@song.Name</a></td>
                 @*<td><a asp-controller="Home" asp-action="Detail" asp-route-id="@song.ArtistId">@song.Artist</a></td>
                     <td>@Model.Artist</td>*@
+                <td><a asp-controller="Home" asp-action="Detail" asp-route-id="@song.ArtistId">@song.Artist</a></td>
             </tr>
         }
     </table>
