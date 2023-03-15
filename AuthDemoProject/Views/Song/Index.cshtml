@@ -1,9 +1,9 @@
 ﻿@model List<AuthDemoProject.Models.Song>
 
-<h1>Songs</h1>
+<h1 class="centered">Songs</h1>
 
-<p><a asp-controller="Song" asp-action="AddSong">Add a Song</a></p>
-<p><a asp-controller="Song" asp-action="Delete">Delete a Song</a></p>
+<p><a asp-controller="Song" asp-action="AddSong">Add A Song</a></p>
+<p><a asp-controller="Song" asp-action="Delete">Delete A Song</a></p>
 
 @if (Model.Count == 0)
 {
@@ -13,17 +13,17 @@ else
 {
     <table class="table">
         <tr>
-            <th>Song Name</th>
-            <th>Artist Name</th>
-            <th>Genre</th>
+            <th>Songs Added</th>
+            @*<th>Artist Name</th>
+            <th>Genre</th>*@
         </tr>
         @foreach (Song song in Model)
         {
             <tr>
                 <td><a asp-controller="Home" asp-action="Detail" asp-route-id="@song.Id">@song.Name</a></td>
                 @*<td><a asp-controller="Home" asp-action="Detail" asp-route-id="@song.ArtistId">@song.Artist</a></td>
-                    <td>@Model.Artist</td>*@
-                <td><a asp-controller="Home" asp-action="Detail" asp-route-id="@song.ArtistId">@song.Artist</a></td>
+                    <td>@Model.Artist</td>
+                <td><a asp-controller="Home" asp-action="About" asp-route-id="@song.ArtistId">@song.Artist</a></td>*@
             </tr>
         }
     </table>

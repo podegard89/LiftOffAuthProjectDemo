@@ -83,20 +83,14 @@ namespace AuthDemoProject.Migrations
             modelBuilder.Entity("AuthDemoProject.Models.SongGenre", b =>
                 {
                     b.Property<int>("SongId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<int>("GenreId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SongId1")
-                        .HasColumnType("int");
-
-                    b.HasKey("SongId");
+                    b.HasKey("SongId", "GenreId");
 
                     b.HasIndex("GenreId");
-
-                    b.HasIndex("SongId1");
 
                     b.ToTable("SongGenres");
                 });
@@ -317,7 +311,7 @@ namespace AuthDemoProject.Migrations
                         .HasForeignKey("ApplicationUserId");
 
                     b.HasOne("AuthDemoProject.Models.Artist", "Artist")
-                        .WithMany("Song")
+                        .WithMany("Songs")
                         .HasForeignKey("ArtistId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -333,7 +327,7 @@ namespace AuthDemoProject.Migrations
 
                     b.HasOne("AuthDemoProject.Models.Song", "Song")
                         .WithMany("SongGenres")
-                        .HasForeignKey("SongId1")
+                        .HasForeignKey("SongId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

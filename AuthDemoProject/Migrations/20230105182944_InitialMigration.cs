@@ -214,14 +214,12 @@ namespace AuthDemoProject.Migrations
                 name: "SongGenres",
                 columns: table => new
                 {
-                    SongId = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    SongId1 = table.Column<int>(nullable: false),
+                    SongId = table.Column<int>(nullable: false),
                     GenreId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SongGenres", x => x.SongId);
+                    table.PrimaryKey("PK_SongGenres", x => new { x.SongId, x.GenreId });
                     table.ForeignKey(
                         name: "FK_SongGenres_Genres_GenreId",
                         column: x => x.GenreId,
@@ -229,8 +227,8 @@ namespace AuthDemoProject.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_SongGenres_Songs_SongId1",
-                        column: x => x.SongId1,
+                        name: "FK_SongGenres_Songs_SongId",
+                        column: x => x.SongId,
                         principalTable: "Songs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -277,11 +275,6 @@ namespace AuthDemoProject.Migrations
                 name: "IX_SongGenres_GenreId",
                 table: "SongGenres",
                 column: "GenreId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SongGenres_SongId1",
-                table: "SongGenres",
-                column: "SongId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Songs_ApplicationUserId",

@@ -20,7 +20,7 @@
         <br />
         @foreach (var genre in Model.Genres)
         {
-            <label for="@genre.Id">@genre.Name></label>
+            <label for="@genre.Id">@genre.Name</label>
             <input type="checkbox" name="selectedGenres" value="@genre.Id" />
         }
         <a asp-controller="Genre" asp-action="Add">Add a Genre</a>
